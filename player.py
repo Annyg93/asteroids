@@ -8,6 +8,8 @@ class Player(CircleShape):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.shoot_timer = 0
+        self.lives = 3
+        
 
 
     def triangle(self):
@@ -53,3 +55,8 @@ class Player(CircleShape):
         velocity *= PLAYER_SHOOT_SPEED
         bullet.velocity = velocity
         self.shoot_timer = PLAYER_SHOOT_COOLDOWN
+
+    def respawn(self, x, y):
+        self.lives -= 1
+        self.rotation = 0
+        self.position = pygame.Vector2(x, y)

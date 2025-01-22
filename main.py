@@ -4,6 +4,7 @@ from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from shoot import Shot
+from scoreboard import Scoreboard
 import sys
 
 
@@ -24,6 +25,8 @@ def main():
     Shot.containers = (updatable, drawable, bullets)
     player = Player(x, y, PLAYER_RADIUS)
     asteroid_field = AsteroidField()
+    scoreboard = Scoreboard()
+  
 
     
     print(f"Starting asteroids!\n Screen width: {SCREEN_WIDTH} \n Screen height: {SCREEN_HEIGHT}")
@@ -38,19 +41,24 @@ def main():
 
 
         pygame.Surface.fill(screen, (0,0,0))
+        scoreboard.draw(screen)
 
         for obj in updatable:
             obj.update(dt)
 
         for obj in asteroids:
             if obj.collision(player):
-                print("Game over!")
-                sys.exit()
+                if player.lives >= 1:
+                    player.respawn(x, y)
+                else:
+                    print("Game over!")
+                    sys.exit()
 
             for bullet in bullets:
                 if obj.collision(bullet):
                     obj.split()
                     bullet.kill()
+                    scoreboard.add_points(10)
 
         for obj in drawable:
             obj.draw(screen)
