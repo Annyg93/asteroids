@@ -47,6 +47,11 @@ def main():
                 print("Game over!")
                 sys.exit()
 
+            for bullet in bullets:
+                if obj.collision(bullet):
+                    obj.split()
+                    bullet.kill()
+
         for obj in drawable:
             obj.draw(screen)
 

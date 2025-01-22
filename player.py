@@ -52,4 +52,4 @@ class Player(CircleShape):
         velocity = velocity.rotate(self.rotation)
         velocity *= PLAYER_SHOOT_SPEED
         bullet.velocity = velocity
-        self.timer = PLAYER_SHOOT_COOLDOWN
+        self.shoot_timer = PLAYER_SHOOT_COOLDOWN
